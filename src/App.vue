@@ -1,26 +1,57 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Loading v-if="loading"/>
+  <router-view/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
+import Loading from '@/components/Loading.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    Loading
+  },
+  async created() {
+    const token = localStorage.getItem("scrapper-pro-token")
+
+    if (!token) {
+      this.updateUserState({})
+      this.$router.push('/')
+    } else {
+      this.checkToken(token).then((data) => {
+        this.$router.push(`/${data}`);
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      loading: 'ui/getLoadingState'
+    })
+  },
+  methods: {
+    ...mapMutations({
+      updateLoading: 'ui/updateLoading',
+      updateUserState: 'user/updateUserState'
+    }),
+    ...mapActions({
+      checkToken: 'user/checkToken',
+    }),
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400;1,500&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 </style>

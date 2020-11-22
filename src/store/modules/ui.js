@@ -1,7 +1,7 @@
 const ui = {
   namespaced: true,
   state: () => ({
-    loading: true
+    loading: false
   }),
   mutations: {
     updateLoading(state, condition) {
