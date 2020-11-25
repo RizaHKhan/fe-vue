@@ -3,7 +3,7 @@
     <pre>{{ script }}</pre>
     <h1>{{ script.title }}</h1>
     <p>{{ script.description }}</p>
-    <Button @handle-click="handleClick" />
+    <Button @handle-click="handleClick" :config="buttonConfig" />
   </div>
 </template>
 
@@ -18,6 +18,12 @@ export default {
     script: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    buttonConfig: () => {
+      return {text: 'Something',
+      color: 'blue', action: 'something'}
     }
   },
   methods: {

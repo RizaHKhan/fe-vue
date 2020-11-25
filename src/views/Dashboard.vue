@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <Navigation />
     <div class="scripts-container" v-if="scripts.length">
       <Script v-for="(script, index) in scripts" :key="index" :script="script"/>
     </div>
@@ -13,9 +14,10 @@
 import axios from '@/services/axios.js'
 import { mapGetters, mapMutations } from 'vuex'
 import Script from '@/components/Script'
+import Navigation from '@/components/Navigation'
 
 export default {
-  components: { Script },
+  components: { Script, Navigation },
   async created() {
     this.updateLoading(true)
     try {

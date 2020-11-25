@@ -1,17 +1,18 @@
 <template>
-  <button class="button" @click="handleClick">Click Me</button>
+  <button class="button" @click="handleClick">{{ config.text }}</button>
 </template>
 
 <script>
 export default {
   props: {
     config: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   methods: {
     handleClick() {
-      this.$emit('handle-click')
+      this.$emit('handle-click', this.config.action)
     }
   }
 }
